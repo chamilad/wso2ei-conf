@@ -26,17 +26,17 @@
     <!--
        Product Name
     -->
-    <Name>WSO2 Enterprise Integrator</Name>
+    <Name>WSO2 Business Process Server</Name>
 
     <!--
        machine readable unique key to identify each product
     -->
-    <ServerKey>EI</ServerKey>
+    <ServerKey>BPS</ServerKey>
 
     <!--
        Product Version
     -->
-    <Version>6.1.1</Version>
+    <Version>3.6.0</Version>
 
     <!--
        Host name or IP address of the machine hosting this server
@@ -44,7 +44,7 @@
        This is will become part of the End Point Reference of the
        services deployed on this server instance.
     -->
-    <!--HostName>www.wso2.org</HostName-->
+    <HostName>localhost</HostName>
 
     <!--
     Host name to be used for the Carbon management console
@@ -73,10 +73,7 @@
     Ex : <Role>.*</Role> means this server can act any role
     -->
     <ServerRoles>
-        <Role>EnterpriseIntegrator</Role>
-        <Role>EnterpriseServiceBus</Role>
-        <Role>DataServicesServer</Role>
-        <Role>ApplicationServer</Role>
+        <Role>BusinessProcessServer</Role>
     </ServerRoles>
 
     <!-- uncommnet this line to subscribe to a bam instance automatically -->
@@ -127,7 +124,7 @@
          the define value + Offset.
          e.g. Offset=2 and HTTPS port=9443 will set the effective HTTPS port to 9445
          -->
-        <Offset>0</Offset>
+        <Offset>2</Offset>
 
         <!-- The JMX Ports -->
         <JMX>
@@ -358,6 +355,16 @@
       Security configurations
     -->
     <Security>
+
+        <CSRFPreventionConfig>
+            <!-- CSRFPreventionFilter configurations that adopts Synchronizer Token Pattern -->
+            <CSRFPreventionFilter>
+                <!-- Set below to true to enable the CSRFPreventionFilter -->
+                <Enabled>false</Enabled>
+                <!-- Url Pattern to skip application of CSRF protection-->
+                <SkipUrlPattern>(.*)(/images|/css|/js|/docs)(.*)</SkipUrlPattern>
+            </CSRFPreventionFilter>
+        </CSRFPreventionConfig>
         <!--
             KeyStore which will be used for encrypting/decrypting passwords
             and other sensitive information.

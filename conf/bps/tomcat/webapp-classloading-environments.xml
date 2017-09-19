@@ -70,7 +70,7 @@
     <ExclusiveEnvironments>
         <ExclusiveEnvironment>
             <Name>CXF</Name>
-	    <Classpath>${carbon.home}/wso2/lib/runtimes/cxf/*.jar;${carbon.home}/wso2/lib/runtimes/cxf/</Classpath>
+            <Classpath>${carbon.home}/../lib/runtimes/cxf/*.jar;${carbon.home}/../lib/runtimes/cxf/</Classpath>
         </ExclusiveEnvironment>
     </ExclusiveEnvironments>
 
