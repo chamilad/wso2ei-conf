@@ -25,7 +25,7 @@
 CARBON_HOME="/opt/wso2ei-6.1.1/"
 conf_root=$(pwd)
 
-# Validate 
+# Validate
 if [ ! -d $conf_root/conf/$WSO2_SERVER_RUNTIME ]; then
   echo "ERROR: Unsupported WSO2_SERVER_RUNTIME: ${WSO2_SERVER_RUNTIME}."
   exit 1
@@ -51,11 +51,9 @@ find $CONF_HOME -type f -exec sed -i "s|WSO2_DB_PASSWORD|${WSO2_DB_PASSWORD}|" {
 
 if [ -d files ]; then
   echo "Copying files..."
-  if [ -z "$(ls files/)" ]; then
-     echo "No files were found inside ${conf_root}/files/ folder. Skipping file copy..."
-  else
-     cp -r files/* $CARBON_HOME/.
-  fi
+  cp -r files/common/* $CARBON_HOME/.
+  cp -r files/$WSO2_SERVER_RUNTIME/* $CARBON_HOME/.
+  find $CARBON_HOME/ -name ".gitkeep" | xargs rm -rf
 fi
 
 echo "Starting WSO2 Server..."
