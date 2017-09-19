@@ -1,12 +1,12 @@
 <datasources-configuration xmlns:svns="http://org.wso2.securevault/configuration">
-  
+
     <providers>
         <provider>org.wso2.carbon.ndatasource.rdbms.RDBMSDataSourceReader</provider>
     </providers>
-  
+
     <datasources>
-      
-        <datasource>
+
+        <!-- <datasource>
             <name>ACTIVITI_DB</name>
             <description>The datasource used for activiti engine</description>
             <jndiConfig>
@@ -25,7 +25,7 @@
                     <validationInterval>30000</validationInterval>
                 </configuration>
             </definition>
-        </datasource>
+        </datasource> -->
 
     </datasources>
 

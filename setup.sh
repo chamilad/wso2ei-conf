@@ -42,7 +42,7 @@ else
 fi
 
 echo "Copying configuration files..."
-pushd $CONF_HOME
+pushd $CONF_HOME > /dev/null 2>&1
   mv conf conf.bck
   cp -r "${setup_root}/conf/${WSO2_SERVER_RUNTIME}/" ./
   mv $WSO2_SERVER_RUNTIME conf
@@ -54,19 +54,19 @@ pushd $CONF_HOME
   find . -type f -exec sed -i "s|WSO2_DB_NAME|${WSO2_DB_NAME}|" {} \;
   find . -type f -exec sed -i "s|WSO2_DB_USERNAME|${WSO2_DB_USERNAME}|" {} \;
   find . -type f -exec sed -i "s|WSO2_DB_PASSWORD|${WSO2_DB_PASSWORD}|" {} \;
-popd
+popd > /dev/null 2>&1
 
 if [ -d files ]; then
   echo "Copying files..."
-  pushd "${setup_root}/files/common/"
+  pushd "${setup_root}/files/common/" > /dev/null 2>&1
     cp -r ./ $CARBON_HOME/
-  popd
-  pushd "${setup_root}/files/${WSO2_SERVER_RUNTIME}/"
+  popd > /dev/null 2>&1
+  pushd "${setup_root}/files/${WSO2_SERVER_RUNTIME}/" > /dev/null 2>&1
     cp -r ./ $CARBON_HOME/
-  popd
-  pushd $CARBON_HOME
+  popd > /dev/null 2>&1
+  pushd $CARBON_HOME > /dev/null 2>&1
     find . -name ".gitkeep" | xargs rm -rf
-  popd
+  popd > /dev/null 2>&1
 fi
 
 echo "Starting WSO2 Server..."

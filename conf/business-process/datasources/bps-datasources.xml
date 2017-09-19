@@ -5,7 +5,7 @@
     </providers>
 
   <datasources>
-        <datasource>
+        <!-- <datasource>
             <name>BPS_DS</name>
             <description></description>
             <jndiConfig>
@@ -28,13 +28,13 @@
                 </configuration>
             </definition>
         </datasource>
-    </datasources>
+    </datasources> -->
 
-    <datasource>
-        <name>WSO2_BPS_DB</name>
+    <!-- <datasource>
+        <name>BPS_DS</name>
         <description>The datasource used for registry and user manager</description>
         <jndiConfig>
-            <name>jdbc/WSO2BPSDB</name>
+            <name>bpsds</name>
         </jndiConfig>
         <definition type="RDBMS">
         <configuration>
@@ -50,5 +50,6 @@
             <defaultAutoCommit>false</defaultAutoCommit>
         </configuration>
         </definition>
-    </datasource>
+    </datasource> -->
+  </datasources>
 </datasources-configuration>

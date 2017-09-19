@@ -1,11 +1,11 @@
 <datasources-configuration xmlns:svns="http://org.wso2.securevault/configuration">
-  
+
     <providers>
         <provider>org.wso2.carbon.ndatasource.rdbms.RDBMSDataSourceReader</provider>
     </providers>
-  
+
     <datasources>
-      
+
         <datasource>
             <name>WSO2_CARBON_DB</name>
             <description>The datasource used for registry and user manager</description>
@@ -25,6 +25,28 @@
                     <validationInterval>30000</validationInterval>
                     <defaultAutoCommit>false</defaultAutoCommit>
                 </configuration>
+            </definition>
+        </datasource>
+
+        <datasource>
+            <name>WSO2_BPS_DB</name>
+            <description>The datasource used for registry and user manager</description>
+            <jndiConfig>
+                <name>jdbc/WSO2BPSDB</name>
+            </jndiConfig>
+            <definition type="RDBMS">
+            <configuration>
+                <url>jdbc:mysql://WSO2_DB_HOSTNAME:WSO2_DB_PORT/WSO2_DB_NAME?autoReconnect=true&amp;relaxAutoCommit=true&amp;</url>
+                <username>WSO2_DB_USERNAME</username>
+                <password>WSO2_DB_PASSWORD</password>
+                <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                <maxActive>50</maxActive>
+                <maxWait>60000</maxWait>
+                <testOnBorrow>true</testOnBorrow>
+                <validationQuery>SELECT 1</validationQuery>
+                <validationInterval>30000</validationInterval>
+                <defaultAutoCommit>false</defaultAutoCommit>
+            </configuration>
             </definition>
         </datasource>
 
