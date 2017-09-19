@@ -5,7 +5,7 @@
 # should be provided (via user-data or any other prefered method).
 #
 # WSO2_SERVER_RUNTIME - The runtime id of the server. Currently supports either
-#                       "bps" or "integrator"
+#                       "business-process" or "integrator"
 # WSO2_CARBON_HOME - The location where the WSO2 Server is located
 # WSO2_HOSTNAME - The hostname to be used in the WSO2 servers
 # WSO2_DB_HOSTNAME - The hostname of the DB server
@@ -13,7 +13,7 @@
 # WSO2_DB_NAME - The DB name
 # WSO2_DB_USERNAME - The username to access the DB
 # WSO2_DB_PASSWORD - The password to access the DB
-# WSO2_SERVER_ARGS - Arguments to pass to the WSO2 Server starter script.
+# WSO2_SERVER_ARGS - Arguments to pass to the WSO2 Server starter script
 #
 # These values will be used to configure the following WSO2 configuration files.
 #
@@ -24,7 +24,40 @@
 # At the end of the configuration, the WSO2 server will be started.
 
 
-# TODO: Validate empty values.
+if [ -z $WSO2_SERVER_RUNTIME ]; then
+  echo "ERROR: Please specify WSO2_SERVER_RUNTIME environment variable."
+  exit 1
+fi
+
+if [ -z $WSO2_CARBON_HOME ]; then
+  echo "ERROR: Please specify WSO2_CARBON_HOME environment variable."
+  exit 1
+fi
+
+if [ -z $WSO2_HOSTNAME ]; then
+  echo "ERROR: Please specify WSO2_HOSTNAME environment variable."
+  exit 1
+fi
+
+if [ -z $WSO2_DB_HOSTNAME ]; then
+  echo "ERROR: Please specify WSO2_DB_HOSTNAME environment variable."
+  exit 1
+fi
+
+if [ -z $WSO2_DB_PORT ]; then
+  echo "ERROR: Please specify WSO2_DB_PORT environment variable."
+  exit 1
+fi
+
+if [ -z $WSO2_DB_USERNAME ]; then
+  echo "ERROR: Please specify WSO2_DB_USERNAME environment variable."
+  exit 1
+fi
+
+if [ -z $WSO2_DB_PASSWORD ]; then
+  echo "ERROR: Please specify WSO2_DB_PASSWORD environment variable."
+  exit 1
+fi
 
 CARBON_HOME="${WSO2_CARBON_HOME}"
 setup_root=$(pwd)
