@@ -1,6 +1,6 @@
 <HumanTaskServerConfig xmlns="http://wso2.org/humantask/schema/server/config" xmlns:svns="http://org.wso2.securevault/configuration">
     <PersistenceConfig>
-        <DataSource>bpsds</DataSource>
+        <DataSource>jdbc/WSO2BPSDB</DataSource>
         <GenerateDdl>true</GenerateDdl>
         <ShowSql>false</ShowSql>
         <!--JNDIInitialContextFactory>com.sun.jndi.rmi.registry.RegistryContextFactory</JNDIInitialContextFactory>

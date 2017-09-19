@@ -1,6 +1,6 @@
 <AttachmentManagementConfig xmlns="http://wso2.org/attachment/mgt/schema/server/config">
         <PersistenceConfig>
-            <DataSource>bpsds</DataSource>
+            <DataSource>jdbc/WSO2BPSDB</DataSource>
             <DAOConnectionFactoryClass>org.wso2.carbon.attachment.mgt.core.dao.impl.jpa.openjpa.AttachmentMgtDAOConnectionFactoryImpl</DAOConnectionFactoryClass>
             <GenerateDdl>true</GenerateDdl>
             <ShowSql>false</ShowSql>

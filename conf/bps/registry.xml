@@ -32,7 +32,30 @@
     <dbConfig name="wso2registry">
         <dataSource>jdbc/WSO2CarbonDB</dataSource>
     </dbConfig>
-    
+
+    <dbConfig name="govregistry">
+      <dataSource>jdbc/WSO2BPSDB</dataSource>
+    </dbConfig>
+
+    <remoteInstance url="https://localhost">
+          <id>gov</id>
+          <dbConfig>govregistry</dbConfig>
+          <cacheId>apiuser@jdbc:mysql://localhost:3306/registry</cacheId>
+          <readOnly>false</readOnly>
+          <enableCache>true</enableCache>
+          <registryRoot>/</registryRoot>
+      </remoteInstance>
+
+    <mount path="/_system/governance" overwrite="true">
+          <instanceId>gov</instanceId>
+          <targetPath>/_system/governance</targetPath>
+    </mount>
+
+    <mount path="/_system/config" overwrite="true">
+         <instanceId>gov</instanceId>
+         <targetPath>/_system/config</targetPath>
+    </mount>
+
     <indexingConfiguration>
         <startIndexing>true</startIndexing>
         <startingDelayInSeconds>35</startingDelayInSeconds>
@@ -117,7 +140,7 @@
         <targetPath>/_system/nodes</targetPath>
     </mount-->
 
-    
+
     <versionResourcesOnChange>false</versionResourcesOnChange>
 
     <!-- NOTE: You can edit the options under "StaticConfiguration" only before the
