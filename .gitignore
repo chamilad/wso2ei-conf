@@ -1,5 +1,6 @@
 # Confidential configuration
-conf.sh
+conf.sh*
+!conf.sh.sample
 
 # Files
 files/**/*.zip

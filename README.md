@@ -32,6 +32,8 @@ cp conf.sh.sample conf.sh
 # export WSO2_DB_HOSTNAME="localhost"
 # export WSO2_DB_PORT="3306"
 # export WSO2_DB_NAME="WSO2BPS_DB"
+# export WSO2_DB_DRIVER_NAME=""
+# export WSO2_DB_PROTOCOL=""
 # export WSO2_DB_USERNAME="root"
 # export WSO2_DB_PASSWORD="toor"
 # export WSO2_SERVER_ARGS="-Dsetup"
