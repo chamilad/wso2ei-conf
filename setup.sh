@@ -5,13 +5,15 @@
 # should be provided (via user-data or any other prefered method).
 #
 # WSO2_SERVER_RUNTIME - The runtime id of the server. Currently supports either
-#                       "bps" or "integrator".
+#                       "bps" or "integrator"
+# WSO2_CARBON_HOME - The location where the WSO2 Server is located
 # WSO2_HOSTNAME - The hostname to be used in the WSO2 servers
 # WSO2_DB_HOSTNAME - The hostname of the DB server
 # WSO2_DB_PORT - The port at which the DB server is operating
 # WSO2_DB_NAME - The DB name
 # WSO2_DB_USERNAME - The username to access the DB
 # WSO2_DB_PASSWORD - The password to access the DB
+# WSO2_SERVER_ARGS - Arguments to pass to the WSO2 Server starter script.
 #
 # These values will be used to configure the following WSO2 configuration files.
 #
@@ -22,39 +24,50 @@
 # At the end of the configuration, the WSO2 server will be started.
 
 
-CARBON_HOME="/opt/wso2ei-6.1.1/"
-conf_root=$(pwd)
+# TODO: Validate empty values.
+
+CARBON_HOME="${WSO2_CARBON_HOME}"
+setup_root=$(pwd)
 
 # Validate
-if [ ! -d $conf_root/conf/$WSO2_SERVER_RUNTIME ]; then
+if [ ! -d $setup_root/conf/$WSO2_SERVER_RUNTIME ]; then
   echo "ERROR: Unsupported WSO2_SERVER_RUNTIME: ${WSO2_SERVER_RUNTIME}."
   exit 1
 fi
 
 if [[ "${WSO2_SERVER_RUNTIME}" == "integrator" ]]; then
-  CONF_HOME="${CARBON_HOME}/conf/"
+  CONF_HOME="${CARBON_HOME}/"
 else
-  CONF_HOME="${CARBON_HOME}/wso2/${WSO2_SERVER_RUNTIME}/conf/"
+  CONF_HOME="${CARBON_HOME}/wso2/${WSO2_SERVER_RUNTIME}/"
 fi
 
 echo "Copying configuration files..."
-cp -r "conf/${WSO2_SERVER_RUNTIME}/*" $CONF_HOME
+pushd $CONF_HOME
+  mv conf conf.bck
+  cp -r "${setup_root}/conf/${WSO2_SERVER_RUNTIME}/" ./
+  mv $WSO2_SERVER_RUNTIME conf
 
-echo "Making configuration changes..."
-find $CONF_HOME -type f -exec sed -i "s|WSO2_HOSTNAME|${WSO2_HOSTNAME}|" {} \;
-find $CONF_HOME -type f -exec sed -i "s|WSO2_DB_HOSTNAME|${WSO2_DB_HOSTNAME}|" {} \;
-find $CONF_HOME -type f -exec sed -i "s|WSO2_DB_PORT|${WSO2_DB_PORT}|" {} \;
-find $CONF_HOME -type f -exec sed -i "s|WSO2_DB_NAME|${WSO2_DB_NAME}|" {} \;
-find $CONF_HOME -type f -exec sed -i "s|WSO2_DB_USERNAME|${WSO2_DB_USERNAME}|" {} \;
-find $CONF_HOME -type f -exec sed -i "s|WSO2_DB_PASSWORD|${WSO2_DB_PASSWORD}|" {} \;
-# sed -i "s|WSO2_HOSTNAME|${WSO2_HOSTNAME}|" $CONF_HOME/carbon.xml
+  echo "Making configuration changes..."
+  find . -type f -exec sed -i "s|WSO2_HOSTNAME|${WSO2_HOSTNAME}|" {} \;
+  find . -type f -exec sed -i "s|WSO2_DB_HOSTNAME|${WSO2_DB_HOSTNAME}|" {} \;
+  find . -type f -exec sed -i "s|WSO2_DB_PORT|${WSO2_DB_PORT}|" {} \;
+  find . -type f -exec sed -i "s|WSO2_DB_NAME|${WSO2_DB_NAME}|" {} \;
+  find . -type f -exec sed -i "s|WSO2_DB_USERNAME|${WSO2_DB_USERNAME}|" {} \;
+  find . -type f -exec sed -i "s|WSO2_DB_PASSWORD|${WSO2_DB_PASSWORD}|" {} \;
+popd
 
 if [ -d files ]; then
   echo "Copying files..."
-  cp -r files/common/* $CARBON_HOME/.
-  cp -r files/$WSO2_SERVER_RUNTIME/* $CARBON_HOME/.
-  find $CARBON_HOME/ -name ".gitkeep" | xargs rm -rf
+  pushd "${setup_root}/files/common/"
+    cp -r ./ $CARBON_HOME/
+  popd
+  pushd "${setup_root}/files/${WSO2_SERVER_RUNTIME}/"
+    cp -r ./ $CARBON_HOME/
+  popd
+  pushd $CARBON_HOME
+    find . -name ".gitkeep" | xargs rm -rf
+  popd
 fi
 
 echo "Starting WSO2 Server..."
-bash $CARBON_HOME/bin/$WSO2_SERVER_RUNTIME.sh
+bash $CARBON_HOME/bin/$WSO2_SERVER_RUNTIME.sh $WSO2_SERVER_ARGS

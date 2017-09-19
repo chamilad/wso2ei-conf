@@ -1,0 +1,11 @@
+# Confidential configuration
+conf.sh
+
+# Files
+files/**/*.zip
+files/**/*.jar
+files/**/*.tar
+files/**/*.gz
+
+# Don't ignore .gitkeep
+!files/**/*.gitkeep
