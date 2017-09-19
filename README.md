@@ -1,6 +1,7 @@
-# WSO2 EI 6.1.1 Bootstrap script
-
+# WSO2 EI 6.1.1 Bootstrap Script
 This script configures different runtimes in WSO2 Enterprise Integrator 6.1.1.
+
+![WSO2 EI Minimum Deployment](img/pattern.png "WSO2 EI Minimum Deployment")
 
 ## Supported Runtimes
 1. WSO2 EI Integrator
@@ -21,6 +22,26 @@ The configuration options are expected to be set as environment variables.
 10. WSO2_DB_PASSWORD - The password to access the DB
 11. WSO2_SERVER_ARGS - Arguments to pass to the WSO2 Server starter script
 
+### Database configuration
+This script expects the database to be already created and populated with the initial source scripts. If this cannot be done, the option to setup databases automatically can be followed. For this, pass the `-Dsetup` system property to the WSO2 Server starter script.
+
+```bash
+cd $CARBON_HOME/bin
+./business-process.sh -Dsetup
+```
+
+If this system property is passed, WSO2 Carbon will execute the relevant backup scripts on top of the databases specified. However, this would not always result in expected state, especially if the databases specified are not empty.
+
+`WSO2_SERVER_ARGS` can be used to pass `-Dsetup` argument into the script.
+
+```bash
+export WSO2_SERVER_ARGS="-Dsetup"
+```
+
+> NOTE: Please note that this is not recommended to be used on a production environment, for which the next section should be followed to set up the databases.
+
+#### Setting up the database
+For each runtime, the initial database scripts are shipped with the product. These would be inside `CARBON_HOME/wso2/RUNTIME/dbscripts` folder (except for the Integration runtime in which the database scripts are in `CARBON_HOME/dbscripts`). After creating the database, the relevant `*.sql` files can be sourced in. How these should be restored differ based on the type of the RDBMS.
 
 ```bash
 # Make a copy of the provided sample configuration file conf.sh.sample as conf.sh.
@@ -60,3 +81,15 @@ files
 ```
 
 Files copied in the above manner in to the `common` folder will be copied into every runtime. If files exist with the same file name in both the `common` folder and the runtime specific folder, the file in the runtime specific folder would be used.
+
+## Containers
+Tools like Docker, K8S enable methods to pass environment variables when spawning Containers.
+
+```bash
+docker run -e WSO2_SERVER_RUNTIME="business-process" -it wso2ei:6.1.1
+```
+
+## Virtual Machines
+Platforms like AWS EC2 provide methods to pass environment variables when spawning instances as `user-data`.
+
+![AWS Launch Instance Screen](img/aws-user-data.png "AWS Launch Instance Screen")
