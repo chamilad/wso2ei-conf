@@ -15,13 +15,15 @@ The configuration options are expected to be set as environment variables.
 4. WSO2_DB_HOSTNAME - The hostname of the DB server
 5. WSO2_DB_PORT - The port at which the DB server is operating
 6. WSO2_DB_NAME - The DB name
-7. WSO2_DB_USERNAME - The username to access the DB
-8. WSO2_DB_PASSWORD - The password to access the DB
-9. WSO2_SERVER_ARGS - Arguments to pass to the WSO2 Server starter script
+7. WSO2_DB_PROTOCOL - The JDBC URL Protocol to use. This would use a default value of "mysql"
+8. WSO2_DB_DRIVER_NAME - The JDBC driver name to be used in the datasources. This would use a default value of "com.mysql.jdbc.Driver"
+9. WSO2_DB_USERNAME - The username to access the DB
+10. WSO2_DB_PASSWORD - The password to access the DB
+11. WSO2_SERVER_ARGS - Arguments to pass to the WSO2 Server starter script
 
 
 ```bash
-# Make a copy of the provided sample configuration file conf.sh.sample as conf.sh. 
+# Make a copy of the provided sample configuration file conf.sh.sample as conf.sh.
 cp conf.sh.sample conf.sh
 # Add the properites as needed. A sample set of values can be as follows.
 # export WSO2_SERVER_RUNTIME="business-process"

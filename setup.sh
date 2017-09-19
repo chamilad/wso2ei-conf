@@ -13,6 +13,8 @@
 # WSO2_DB_NAME - The DB name
 # WSO2_DB_USERNAME - The username to access the DB
 # WSO2_DB_PASSWORD - The password to access the DB
+# WSO2_DB_PROTOCOL - The JDBC URL Protocol to use. This would use a default value of "mysql"
+# WSO2_DB_DRIVER_NAME - The JDBC driver name to be used in the datasources. This would use a default value of "com.mysql.jdbc.Driver"
 # WSO2_SERVER_ARGS - Arguments to pass to the WSO2 Server starter script
 #
 # These values will be used to configure the following WSO2 configuration files.
@@ -59,6 +61,16 @@ if [ -z $WSO2_DB_PASSWORD ]; then
   exit 1
 fi
 
+if [ -z $WSO2_DB_DRIVER_NAME ]; then
+  echo "WARN: WSO2_DB_DRIVER_NAME environment variable not found. Using the default value \"com.mysql.jdbc.Driver\"."
+  WSO2_DB_DRIVER_NAME="com.mysql.jdbc.Driver"
+fi
+
+if [ -z $WSO2_DB_PROTOCOL ]; then
+  echo "WARN: WSO2_DB_PROTOCOL environment variable not found. Using the default value \"mysql\"."
+  WSO2_DB_PROTOCOL="mysql"
+fi
+
 CARBON_HOME="${WSO2_CARBON_HOME}"
 setup_root=$(pwd)
 
@@ -85,6 +97,8 @@ pushd $CONF_HOME > /dev/null 2>&1
   find . -type f -exec sed -i "s|WSO2_DB_HOSTNAME|${WSO2_DB_HOSTNAME}|" {} \;
   find . -type f -exec sed -i "s|WSO2_DB_PORT|${WSO2_DB_PORT}|" {} \;
   find . -type f -exec sed -i "s|WSO2_DB_NAME|${WSO2_DB_NAME}|" {} \;
+  find . -type f -exec sed -i "s|WSO2_DB_PROTOCOL|${WSO2_DB_PROTOCOL}|" {} \;
+  find . -type f -exec sed -i "s|WSO2_DB_DRIVER_NAME|${WSO2_DB_DRIVER_NAME}|" {} \;
   find . -type f -exec sed -i "s|WSO2_DB_USERNAME|${WSO2_DB_USERNAME}|" {} \;
   find . -type f -exec sed -i "s|WSO2_DB_PASSWORD|${WSO2_DB_PASSWORD}|" {} \;
 popd > /dev/null 2>&1
