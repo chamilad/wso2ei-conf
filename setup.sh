@@ -16,6 +16,8 @@
 # WSO2_DB_PROTOCOL - The JDBC URL Protocol to use. This would use a default value of "mysql"
 # WSO2_DB_DRIVER_NAME - The JDBC driver name to be used in the datasources. This would use a default value of "com.mysql.jdbc.Driver"
 # WSO2_SERVER_ARGS - Arguments to pass to the WSO2 Server starter script
+# WSO2_HTTP_PROXY_PORT - The proxyPort value to be used for the HTTP port
+# WSO2_HTTPS_PROXY_PORT - The proxyPort value to be used for the HTTPS port 
 #
 # These values will be used to configure the following WSO2 configuration files.
 #
@@ -101,6 +103,16 @@ pushd $CONF_HOME > /dev/null 2>&1
   find . -type f -exec sed -i "s|WSO2_DB_DRIVER_NAME|${WSO2_DB_DRIVER_NAME}|" {} \;
   find . -type f -exec sed -i "s|WSO2_DB_USERNAME|${WSO2_DB_USERNAME}|" {} \;
   find . -type f -exec sed -i "s|WSO2_DB_PASSWORD|${WSO2_DB_PASSWORD}|" {} \;
+
+  if [ ! -z $WSO2_HTTP_PROXY_PORT ]; then
+    sed -i "/port=\"9763\"/a \
+    proxyPort=\"${WSO2_HTTP_PROXY_PORT}\"" ./conf/tomcat/catalina-server.xml
+  fi
+
+  if [ ! -z $WSO2_HTTPS_PROXY_PORT ]; then
+    sed -i "/port=\"9443\"/a \
+    proxyPort=\"${WSO2_HTTPS_PROXY_PORT}\"" ./conf/tomcat/catalina-server.xml
+  fi
 popd > /dev/null 2>&1
 
 if [ -d files ]; then

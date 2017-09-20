@@ -10,17 +10,19 @@ This script configures different runtimes in WSO2 Enterprise Integrator 6.1.1.
 ## How To
 The configuration options are expected to be set as environment variables.
 
-1. WSO2_SERVER_RUNTIME - The runtime id of the server. Currently supports either "business-process" or "integrator"
+1. WSO2_SERVER_RUNTIME - The runtime id of the server. Currently supports either `business-process` or `integrator`
 2. WSO2_CARBON_HOME - The location where the WSO2 Server is located
 3. WSO2_HOSTNAME - The hostname to be used in the WSO2 servers
 4. WSO2_DB_HOSTNAME - The hostname of the DB server
 5. WSO2_DB_PORT - The port at which the DB server is operating
 6. WSO2_DB_NAME - The DB name
-7. WSO2_DB_PROTOCOL - The JDBC URL Protocol to use. This would use a default value of "mysql"
-8. WSO2_DB_DRIVER_NAME - The JDBC driver name to be used in the datasources. This would use a default value of "com.mysql.jdbc.Driver"
+7. WSO2_DB_PROTOCOL - The JDBC URL Protocol to use. This would use a default value of `mysql`
+8. WSO2_DB_DRIVER_NAME - The JDBC driver name to be used in the datasources. This would use a default value of `com.mysql.jdbc.Driver`
 9. WSO2_DB_USERNAME - The username to access the DB
 10. WSO2_DB_PASSWORD - The password to access the DB
 11. WSO2_SERVER_ARGS - Arguments to pass to the WSO2 Server starter script
+12. WSO2_HTTP_PROXY_PORT - The `proxyPort` value to be used for the HTTP port. These values, if present, would be used in `catalina-server.xml` file.
+13. WSO2_HTTPS_PROXY_PORT - The `proxyPort` value to be used for the HTTPS port. These values, if present, would be used in `catalina-server.xml` file.
 
 ### Database configuration
 This script expects the database to be already created and populated with the initial source scripts. If this cannot be done, the option to setup databases automatically can be followed. For this, pass the `-Dsetup` system property to the WSO2 Server starter script.
