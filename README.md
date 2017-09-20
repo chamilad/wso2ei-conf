@@ -10,7 +10,7 @@ This script configures different runtimes in WSO2 Enterprise Integrator 6.1.1.
 ## How To
 1. Download and extract the WSO2 EI 6.1.1 distribution. This location would be the value to be used in the configuration option `WSO2_CARBON_HOME`.
 2. Clone this repository to a preferred location.
-3. **OPTIONAL:** Download any JDBC drivers and other external libraries that are needed to be copied over to `CARBON_HOME` and place them inside the `files` folder as described in the section [Copying Files]().
+3. **OPTIONAL:** Download any JDBC drivers and other external libraries that are needed to be copied over to `CARBON_HOME` and place them inside the `files` folder as described in the section [Copying Files](#copying-files).
 4. **OPTIONAL:** Setup any load balancers that would front these instances.
 5. Set necessary environment variables as described in the following section.
 6. Run `setup.sh` file.
