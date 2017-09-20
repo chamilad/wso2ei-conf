@@ -8,23 +8,31 @@ This script configures different runtimes in WSO2 Enterprise Integrator 6.1.1.
 2. WSO2 EI BPS
 
 ## How To
+1. Download and extract the WSO2 EI 6.1.1 distribution. This location would be the value to be used in the configuration option `WSO2_CARBON_HOME`.
+2. Clone this repository to a preferred location.
+3. **OPTIONAL:** Download any JDBC drivers and other external libraries that are needed to be copied over to `CARBON_HOME` and place them inside the `files` folder as described in the section [Copying Files]().
+4. **OPTIONAL:** Setup any load balancers that would front these instances.
+5. Set necessary environment variables as described in the following section.
+6. Run `setup.sh` file.
+
+### Configuration
 The configuration options are expected to be set as environment variables.
 
-1. WSO2_SERVER_RUNTIME - The runtime id of the server. Currently supports either `business-process` or `integrator`
-2. WSO2_CARBON_HOME - The location where the WSO2 Server is located
-3. WSO2_HOSTNAME - The hostname to be used in the WSO2 servers
-4. WSO2_DB_HOSTNAME - The hostname of the DB server
-5. WSO2_DB_PORT - The port at which the DB server is operating
-6. WSO2_DB_NAME - The DB name
-7. WSO2_DB_PROTOCOL - The JDBC URL Protocol to use. This would use a default value of `mysql`
-8. WSO2_DB_DRIVER_NAME - The JDBC driver name to be used in the datasources. This would use a default value of `com.mysql.jdbc.Driver`
-9. WSO2_DB_USERNAME - The username to access the DB
-10. WSO2_DB_PASSWORD - The password to access the DB
-11. WSO2_SERVER_ARGS - Arguments to pass to the WSO2 Server starter script
-12. WSO2_HTTP_PROXY_PORT - The `proxyPort` value to be used for the HTTP port. These values, if present, would be used in `catalina-server.xml` file.
-13. WSO2_HTTPS_PROXY_PORT - The `proxyPort` value to be used for the HTTPS port. These values, if present, would be used in `catalina-server.xml` file.
+1. `WSO2_SERVER_RUNTIME` - The runtime id of the server. Currently supports either `business-process` or `integrator`
+2. `WSO2_CARBON_HOME` - The location where the WSO2 Server is located
+3. `WSO2_HOSTNAME` - The hostname to be used in the WSO2 servers
+4. `WSO2_DB_HOSTNAME` - The hostname of the DB server
+5. `WSO2_DB_PORT` - The port at which the DB server is operating
+6. `WSO2_DB_NAME` - The DB name
+7. `WSO2_DB_PROTOCOL` - The JDBC URL Protocol to use. This would use a default value of `mysql`
+8. `WSO2_DB_DRIVER_NAME` - The JDBC driver name to be used in the datasources. This would use a default value of `com.mysql.jdbc.Driver`
+9. `WSO2_DB_USERNAME` - The username to access the DB
+10. `WSO2_DB_PASSWORD` - The password to access the DB
+11. `WSO2_SERVER_ARGS` - Arguments to pass to the WSO2 Server starter script
+12. `WSO2_HTTP_PROXY_PORT` - The `proxyPort` value to be used for the HTTP port. These values, if present, would be used in `catalina-server.xml` file.
+13. `WSO2_HTTPS_PROXY_PORT` - The `proxyPort` value to be used for the HTTPS port. These values, if present, would be used in `catalina-server.xml` file.
 
-### Database configuration
+#### Database configuration
 This script expects the database to be already created and populated with the initial source scripts. If this cannot be done, the option to setup databases automatically can be followed. For this, pass the `-Dsetup` system property to the WSO2 Server starter script.
 
 ```bash
@@ -40,14 +48,16 @@ If this system property is passed, WSO2 Carbon will execute the relevant backup 
 export WSO2_SERVER_ARGS="-Dsetup"
 ```
 
-> NOTE: Please note that this is not recommended to be used on a production environment, for which the next section should be followed to set up the databases.
+> Please note that using `-Dsetup` is not recommended for a production environment. Properly setting up databases should be done with database scripts that are shipped with the product, on which the next section elaborates on.
 
-#### Setting up the database
+##### Setting up the database
 For each runtime, the initial database scripts are shipped with the product. These would be inside `CARBON_HOME/wso2/RUNTIME/dbscripts` folder (except for the Integration runtime in which the database scripts are in `CARBON_HOME/dbscripts`). After creating the database, the relevant `*.sql` files can be sourced in. How these should be restored differ based on the type of the RDBMS.
 
+### Running the `setup.sh`
 ```bash
 # Make a copy of the provided sample configuration file conf.sh.sample as conf.sh.
-cp conf.sh.sample conf.sh
+$ cp conf.sh.sample conf.sh
+
 # Add the properites as needed. A sample set of values can be as follows.
 # export WSO2_SERVER_RUNTIME="business-process"
 # export WSO2_CARBON_HOME="/home/chamilad/dev/wso2ei-6.1.1"
@@ -60,11 +70,20 @@ cp conf.sh.sample conf.sh
 # export WSO2_DB_USERNAME="root"
 # export WSO2_DB_PASSWORD="toor"
 # export WSO2_SERVER_ARGS="-Dsetup"
-vi conf.sh
+# export WSO2_HTTP_PROXY_PORT="80"
+# export WSO2_HTTPS_PROXY_PORT="443"
+$ vi conf.sh
+
 # Source the conf.sh.
-source conf.sh
+$ source conf.sh
+
 # Run setup.sh file. This would start the WSO2 Server at the above specified location.
-bash setup.sh
+$ bash setup.sh
+Copying configuration files...
+Making configuration changes...
+Copying files...
+Starting WSO2 Server...
+
 ```
 
 ## Copying Files
