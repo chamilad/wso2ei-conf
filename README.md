@@ -82,7 +82,105 @@ export WSO2_HTTPS_PROXY_PORT="443"
 ```
 
 ### Database Configuration
-This script expects the database to be already created and populated with the initial source scripts. If this cannot be done, the option to setup databases automatically when the product starts can be followed. For this, pass the `-Dsetup` system property to the WSO2 Server starter script.
+This script expects the database to be already created and populated with the initial source scripts.
+
+#### Setting up the Database
+For each runtime, the initial database scripts are shipped with the product. These would be inside `CARBON_HOME/wso2/RUNTIME/dbscripts` folder (except for the Integration runtime in which the database scripts are in `CARBON_HOME/dbscripts`). After creating the database, the relevant `*.sql` files can be sourced in. How these should be restored differ based on the type of the RDBMS.
+
+For example, setting up a Postgre database with data needed for WSO2 EI BPS would require steps similar to the following.
+
+1. Login to Posgres.
+```
+sudo -u postgres psql postgres
+```
+2. Create database and connect.
+```
+psql (9.6.5, server 9.5.8)
+Type "help" for help.
+
+postgres=# \l
+                                  List of databases
+    Name    |  Owner   | Encoding |   Collate   |    Ctype    |   Access privileges
+------------+----------+----------+-------------+-------------+-----------------------
+ postgres   | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
+ template0  | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =c/postgres          +
+            |          |          |             |             | postgres=CTc/postgres
+ template1  | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =c/postgres          +
+            |          |          |             |             | postgres=CTc/postgres
+(4 rows)
+
+postgres=# CREATE DATABASE "WSO2BPS_DB";
+CREATE DATABASE
+postgres=# \l
+List of databases
+Name    |  Owner   | Encoding |   Collate   |    Ctype    |   Access privileges
+------------+----------+----------+-------------+-------------+-----------------------
+WSO2BPS_DB | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
+postgres   | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
+template0  | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =c/postgres          +
+|          |          |             |             | postgres=CTc/postgres
+template1  | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =c/postgres          +
+|          |          |             |             | postgres=CTc/postgres
+(4 rows)
+
+postgres=# \c WSO2BPS_DB;
+psql (9.6.5, server 9.5.8)
+You are now connected to database "WSO2BPS_DB" as user "postgres".
+WSO2BPS_DB=# \dt
+No relations found.
+WSO2BPS_DB=#
+```
+3. Execute the database scripts for WSO2 Carbon, BPEL, and BPMN.
+```
+WSO2BPS_DB=# \i /home/chamilad/wso2ei-6.1.1/wso2/business-process/dbscripts/postgresql.sql
+...
+...
+WSO2BPS_DB=# \i /home/chamilad/wso2ei-6.1.1/wso2/business-process/dbscripts/bps/bpel/create/postgresql.sql
+...
+...
+WSO2BPS_DB=# \i /home/chamilad/wso2ei-6.1.1/wso2/business-process/dbscripts/bpmn/create/activiti.postgres.create.engine.sql
+...
+...
+WSO2BPS_DB=# \i /home/chamilad/wso2ei-6.1.1/wso2/business-process/dbscripts/bpmn/create/activiti.postgres.create.history.sql
+...
+...
+WSO2BPS_DB=# \i /home/chamilad/wso2ei-6.1.1/wso2/business-process/dbscripts/bpmn/create/activiti.postgres.create.identity.sql
+...
+...
+WSO2BPS_DB=# \i /home/chamilad/wso2ei-6.1.1/wso2/business-process/dbscripts/bpmn/create/activiti.postgres.create.substitute.sql
+...
+...
+WSO2BPS_DB=# \dt
+List of relations
+Schema |          Name           | Type  |  Owner
+--------+-------------------------+-------+----------
+public | act_bps_substitutes     | table | postgres
+public | act_evt_log             | table | postgres
+public | act_ge_bytearray        | table | postgres
+public | act_ge_property         | table | postgres
+public | act_hi_actinst          | table | postgres
+public | act_hi_attachment       | table | postgres
+public | act_hi_comment          | table | postgres
+public | act_hi_detail           | table | postgres
+public | act_hi_identitylink     | table | postgres
+public | act_hi_procinst         | table | postgres
+public | act_hi_taskinst         | table | postgres
+public | act_hi_varinst          | table | postgres
+public | act_id_group            | table | postgres
+public | act_id_info             | table | postgres
+public | act_id_membership       | table | postgres
+public | act_id_user             | table | postgres
+public | act_procdef_info        | table | postgres
+...
+...
+...
+WSO2BPS_DB=#
+```
+
+##### Setup Databases Automatically
+If the manual setup of the database cannot be done for some reason, the option to setup databases automatically when the product starts can be followed. For this, pass the `-Dsetup` system property to the WSO2 Server starter script.
+
+> Please note that using `-Dsetup` is not recommended for a production environment. Properly setting up databases should be done with database scripts that are shipped with the product
 
 ```bash
 cd $CARBON_HOME/bin
@@ -96,11 +194,6 @@ If this system property is passed, WSO2 Carbon will execute the relevant databas
 ```bash
 export WSO2_SERVER_ARGS="-Dsetup"
 ```
-
-> Please note that using `-Dsetup` is not recommended for a production environment. Properly setting up databases should be done with database scripts that are shipped with the product, on which the next section elaborates on.
-
-#### Setting up the Database
-For each runtime, the initial database scripts are shipped with the product. These would be inside `CARBON_HOME/wso2/RUNTIME/dbscripts` folder (except for the Integration runtime in which the database scripts are in `CARBON_HOME/dbscripts`). After creating the database, the relevant `*.sql` files can be sourced in. How these should be restored differ based on the type of the RDBMS.
 
 ### Copying Files
 Create the directory structure inside the `files/<runtime>` folder, as the file should be copied to the destination, relative to `CARBON_HOME`. For example, if the MySQL JDBC driver should be copied inside `$CARBON_HOME/lib` folder for the `business-process` runtime, then the folder structure inside `files` folder should be as follows.
