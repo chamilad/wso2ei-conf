@@ -1,13 +1,27 @@
 export WSO2_SERVER_RUNTIME=""
+
 export WSO2_CARBON_HOME=""
-export WSO2_HOSTNAME=""
-export WSO2_DB_HOSTNAME=""
-export WSO2_DB_PORT=""
-export WSO2_DB_NAME=""
-export WSO2_DB_USERNAME=""
-export WSO2_DB_PASSWORD=""
 export WSO2_SERVER_ARGS=""
-export WSO2_DB_DRIVER_NAME=""
-export WSO2_DB_PROTOCOL=""
+
+# registry database
+export WSO2_REG_DB_HOSTNAME=""
+export WSO2_REG_DB_PORT=""
+export WSO2_REG_DB_NAME=""
+export WSO2_REG_DB_USERNAME=""
+export WSO2_REG_DB_PASSWORD=""
+export WSO2_REG_DB_DRIVER_NAME=""
+export WSO2_REG_DB_PROTOCOL=""
+
+# "business-process" specific configurations
+export WSO2_BPS_DB_HOSTNAME=""
+export WSO2_BPS_DB_PORT=""
+export WSO2_BPS_DB_NAME=""
+export WSO2_BPS_DB_USERNAME=""
+export WSO2_BPS_DB_PASSWORD=""
+export WSO2_BPS_DB_DRIVER_NAME=""
+export WSO2_BPS_DB_PROTOCOL=""
+
+# load balancer related configurations
+export WSO2_HOSTNAME=""
 export WSO2_HTTP_PROXY_PORT=""
 export WSO2_HTTPS_PROXY_PORT=""

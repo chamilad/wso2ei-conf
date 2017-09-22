@@ -29,27 +29,5 @@
             </definition>
         </datasource>
     </datasources> -->
-
-    <!-- <datasource>
-        <name>BPS_DS</name>
-        <description>The datasource used for registry and user manager</description>
-        <jndiConfig>
-            <name>bpsds</name>
-        </jndiConfig>
-        <definition type="RDBMS">
-        <configuration>
-            <url>jdbc:mysql://WSO2_DB_HOSTNAME:WSO2_DB_PORT/WSO2_DB_NAME?autoReconnect=true&amp;relaxAutoCommit=true&amp;</url>
-            <username>WSO2_DB_USERNAME</username>
-            <password>WSO2_DB_PASSWORD</password>
-            <driverClassName>com.mysql.jdbc.Driver</driverClassName>
-            <maxActive>50</maxActive>
-            <maxWait>60000</maxWait>
-            <testOnBorrow>true</testOnBorrow>
-            <validationQuery>SELECT 1</validationQuery>
-            <validationInterval>30000</validationInterval>
-            <defaultAutoCommit>false</defaultAutoCommit>
-        </configuration>
-        </definition>
-    </datasource> -->
   </datasources>
 </datasources-configuration>

@@ -29,23 +29,23 @@
         </datasource>
 
         <datasource>
-            <name>WSO2_INTEGRATOR_DB</name>
-            <description>The datasource used for registry and user manager</description>
+            <name>WSO2_REG_DB</name>
+            <description>The datasource used for config and governance registry</description>
             <jndiConfig>
-                <name>jdbc/WSO2INTEGRATORDB</name>
+                <name>jdbc/WSO2REGDB</name>
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:WSO2_DB_PROTOCOL://WSO2_DB_HOSTNAME:WSO2_DB_PORT/WSO2_DB_NAME</url>
-                    <username>WSO2_DB_USERNAME</username>
-                    <password>WSO2_DB_PASSWORD</password>
-                    <driverClassName>WSO2_DB_DRIVER_NAME</driverClassName>
+                    <url>jdbc:WSO2_REG_DB_PROTOCOL://WSO2_REG_DB_HOSTNAME:WSO2_REG_DB_PORT/WSO2_REG_DB_NAME</url>
+                    <username>WSO2_REG_DB_USERNAME</username>
+                    <password>WSO2_REG_DB_PASSWORD</password>
+                    <driverClassName>WSO2_REG_DB_DRIVER_NAME</driverClassName>
                     <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>
                     <testOnBorrow>true</testOnBorrow>
                     <validationQuery>SELECT 1</validationQuery>
                     <validationInterval>30000</validationInterval>
-                    <defaultAutoCommit>false</defaultAutoCommit>
+                    <defaultAutoCommit>true</defaultAutoCommit>
                 </configuration>
             </definition>
         </datasource>
